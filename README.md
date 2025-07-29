@@ -10,7 +10,7 @@
 
 ## 💧 What is System Sizer II?
 
-**System Sizer II** is a free and open-source web-based tool designed to estimate the correct water softener size based on real-world parameters:
+**System Sizer II** is a free and open-source tool designed to estimate the correct water softener size based on real-world parameters:
 
 - Water hardness (gpg)
 - Iron (ppm)
