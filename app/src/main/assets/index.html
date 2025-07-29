@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>System Sizer II - Water Softener Estimator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #C0C0C0;
+      font-family: "Verdana", sans-serif;
+      color: #000000;
+      margin: 10px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: bold;
+      background-color: #000080;
+      color: white;
+      padding: 10px;
+      border: 2px inset #ffffff;
+      margin-bottom: 5px;
+    }
+
+    #version {
+      font-size: 14px;
+      font-style: italic;
+      margin-bottom: 15px;
+      color: #000080;
+    }
+
+    #logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 150px;
+      width: 100%;
+      height: auto;
+    }
+
+    #notice {
+      max-width: 600px;
+      margin: 0 auto 20px auto;
+      padding: 10px;
+      border: 2px solid #990000;
+      background-color: #fff0f0;
+      color: #990000;
+      font-weight: bold;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    form, #result {
+      max-width: 600px;
+      margin: auto;
+      text-align: left;
+    }
+
+    table {
+      width: 100%;
+      border: 2px outset #000080;
+      background-color: #ffffff;
+    }
+
+    th, td {
+      padding: 8px;
+      border: 1px solid #000080;
+      text-align: left;
+    }
+
+    input, select {
+      width: 100%;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    input[type="submit"], .button-bar button {
+      background-color: #e0e0e0;
+      border: 2px outset #999999;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    #result {
+      background-color: #ffffcc;
+      padding: 10px;
+      border: 2px inset #999900;
+      margin-top: 20px;
+      font-family: monospace;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .button-bar {
+      text-align: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .button-bar button {
+      margin: 5px;
+    }
+
+    .footer {
+      font-size: small;
+      text-align: center;
+      color: gray;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 650px) {
+      body, #notice, table, #result {
+        width: 95%;
+      }
+
+      input, select {
+        font-size: 16px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <img id="logo" src="ss2.gif" alt="System Sizer II Logo">
+
+  <h1>Welcome to System Sizer II</h1>
+  <div id="version">Version 0.5.250729</div>
+
+  <div id="notice">
+    Alert: In order to use this program, you MUST have a current water analysis with Hardness, Iron, and Manganese levels.
+  </div>
+
+  <form onsubmit="calculate(); return false;">
+    <table>
+      <tr>
+        <td>Hardness (gpg):</td>
+        <td><input type="number" id="hardness" value="0" step="0.1"></td>
+      </tr>
+      <tr>
+        <td>Iron (ppm):</td>
+        <td><input type="number" id="iron" value="0" step="0.01"></td>
+      </tr>
+      <tr>
+        <td>Manganese (ppm):</td>
+        <td><input type="number" id="manganese" value="0" step="0.01"></td>
+      </tr>
+      <tr>
+        <td>People in Home:</td>
+        <td><input type="number" id="people" value="1" min="1"></td>
+      </tr>
+      <tr>
+        <td>Use Ecosoft ECOMIX C?</td>
+        <td>
+          <select id="ecomix">
+            <option value="yes">Yes</option>
+            <option value="no" selected>No</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><input type="submit" value="Calculate"></td>
+      </tr>
+    </table>
+  </form>
+
+  <div id="result"></div>
+
+  <div class="button-bar">
+    <button onclick="window.open('https://github.com/crotsertech/System-Sizer-II/issues', '_blank')">File a Bug Report</button>
+    <button onclick="window.open('https://www.paypal.me/crotsertech', '_blank')">Donate to Developer</button>
+    <button onclick="location.href='license.html'">License</button>
+    <button onclick="location.href='help.html'">Help</button>
+  </div>
+
+  <div class="footer">
+    <hr>
+    <a href="https://github.com/crotsertech/System-Sizer-II">System Sizer II</a> &copy; 2025 <a href="https://github.com/crotsertech">N. T. Crotser</a><br>
+    System Sizer II is a work in progress and miscalculations may occur. Use at your own risk.<br>
+    <br>
+  </div>
+
+  <script>
+    function calculate() {
+      let hardness = parseFloat(document.getElementById("hardness").value);
+      let iron = parseFloat(document.getElementById("iron").value);
+      let manganese = parseFloat(document.getElementById("manganese").value);
+      let people = parseInt(document.getElementById("people").value);
+      let ecomix = document.getElementById("ecomix").value === "yes";
+
+      let ironFactor = ecomix ? 15 : 3;
+      let manganeseFactor = ecomix ? 30 : 5;
+
+      let compensatedHardness = hardness + (iron * ironFactor) + (manganese * manganeseFactor);
+      let dailyDemand = people * 82 * compensatedHardness;
+
+      if (
+        isNaN(hardness) || isNaN(iron) || isNaN(manganese) ||
+        isNaN(people) || isNaN(compensatedHardness) || compensatedHardness <= 0
+      ) {
+        alert("No, that's too low!");
+        document.getElementById("result").innerHTML = "";
+        return;
+      }
+
+      let capacityPerCubicFoot = ecomix ? 20000 : 30000;
+      let resinCubicFeetRaw = (dailyDemand * 7) / capacityPerCubicFoot;
+
+      if (resinCubicFeetRaw > 2.5) {
+        document.getElementById("result").innerHTML =
+          "<b>Recommended Resin Volume:</b> Contact a specialist<br>" +
+          "<i>Your demand exceeds standard system sizes.</i>";
+        return;
+      }
+
+      let resinCubicFeet = resinCubicFeetRaw < 1.0 ? 1.0 : resinCubicFeetRaw;
+
+      let allowedSizes = [1.0, 1.5, 2.0, 2.5];
+      let nearestSize = allowedSizes.reduce((prev, curr) =>
+        Math.abs(curr - resinCubicFeet) < Math.abs(prev - resinCubicFeet) ? curr : prev
+      );
+
+      let sizeToCapacity = ecomix
+        ? {1.0: 20000, 1.5: 30000, 2.0: 40000, 2.5: 50000}
+        : {1.0: 30000, 1.5: 45000, 2.0: 60000, 2.5: 75000};
+
+      let totalGrainCapacity = sizeToCapacity[nearestSize];
+      let gallonsBeforeRegen = Math.round(totalGrainCapacity / compensatedHardness);
+
+      if (
+        isNaN(nearestSize) || isNaN(totalGrainCapacity) || isNaN(gallonsBeforeRegen)
+      ) {
+        alert("No, that's too low!");
+        document.getElementById("result").innerHTML = "";
+        return;
+      }
+
+      document.getElementById("result").innerHTML =
+        "<b>Recommended Resin Volume:</b> " + nearestSize.toFixed(1) + " cu ft<br>" +
+        "<b>Recommended Softener Size:</b> " + totalGrainCapacity + " grains<br>" +
+        "<b>Estimated Capacity Before Regeneration:</b> ~" + gallonsBeforeRegen + " gallons";
+    }
+  </script>
+
+</body>
+</html>
+

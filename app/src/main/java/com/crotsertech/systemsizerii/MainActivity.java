@@ -23,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
         SS2 = findViewById(R.id.SS2);
         SS2.getSettings().setJavaScriptEnabled(true);
         SS2.setWebViewClient(new WebViewClient());
-        SS2.loadUrl("https://crotser.us/ss2.html");
+        SS2.loadUrl("file:///android_asset/index.html");
+    }
+
+    @Override
+    public void onBackPressed() {
+        WebView webView = findViewById(R.id.SS2);
+        if (webView.canGoBack()) {
+            webView.goBack();  // Go to previous page
+        } else {
+            super.onBackPressed();  // Exit app if no history
+        }
     }
 }
