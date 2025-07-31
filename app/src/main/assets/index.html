@@ -4,6 +4,10 @@
   <title>System Sizer II - Water Softener Estimator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       background-color: #C0C0C0;
       font-family: "Verdana", sans-serif;
@@ -53,7 +57,6 @@
     form, #result {
       max-width: 600px;
       margin: auto;
-      text-align: left;
     }
 
     table {
@@ -89,20 +92,15 @@
       border: 2px inset #999900;
       margin-top: 20px;
       font-family: monospace;
-      text-align: left;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .button-bar {
-      text-align: center;
-      margin-top: 15px;
+      max-width: 600px;
+      margin: 15px auto 0 auto;
+      display: flex;
+      justify-content: center;
       flex-wrap: wrap;
-    }
-
-    .button-bar button {
-      margin: 5px;
+      gap: 10px;
     }
 
     .footer {
@@ -132,7 +130,7 @@
   <img id="logo" src="ss2.gif" alt="System Sizer II Logo">
 
   <h1>Welcome to System Sizer II</h1>
-  <div id="version">Version 0.5.250729</div>
+  <div id="version">Version 0.5.250730</div>
 
   <div id="notice">
     Alert: In order to use this program, you MUST have a current water analysis with Hardness, Iron, and Manganese levels.
@@ -157,7 +155,7 @@
         <td><input type="number" id="people" value="1" min="1"></td>
       </tr>
       <tr>
-        <td>Use Ecosoft ECOMIX C?</td>
+        <td>Use Ecosoft® ECOMIX C?</td>
         <td>
           <select id="ecomix">
             <option value="yes">Yes</option>
@@ -176,7 +174,6 @@
   <div class="button-bar">
     <button onclick="window.open('https://github.com/crotsertech/System-Sizer-II/issues', '_blank')">File a Bug Report</button>
     <button onclick="window.open('https://www.paypal.me/crotsertech', '_blank')">Donate to Developer</button>
-    <button onclick="location.href='license.html'">License</button>
     <button onclick="location.href='help.html'">Help</button>
   </div>
 
@@ -184,7 +181,6 @@
     <hr>
     <a href="https://github.com/crotsertech/System-Sizer-II">System Sizer II</a> &copy; 2025 <a href="https://github.com/crotsertech">N. T. Crotser</a><br>
     System Sizer II is a work in progress and miscalculations may occur. Use at your own risk.<br>
-    <br>
   </div>
 
   <script>
@@ -205,8 +201,9 @@
         isNaN(hardness) || isNaN(iron) || isNaN(manganese) ||
         isNaN(people) || isNaN(compensatedHardness) || compensatedHardness <= 0
       ) {
-        alert("No, that's too low!");
-        document.getElementById("result").innerHTML = "";
+        document.getElementById("result").innerHTML =
+          "<img src='merchant.gif' alt='Merchant' style='display:block; margin:10px auto; max-width:150px; max-height:150px; height:auto;'>" +
+          "<span style='color: red; font-weight: bold;'>No, that's too low!</span>";
         return;
       }
 
@@ -237,8 +234,10 @@
       if (
         isNaN(nearestSize) || isNaN(totalGrainCapacity) || isNaN(gallonsBeforeRegen)
       ) {
-        alert("No, that's too low!");
-        document.getElementById("result").innerHTML = "";
+        document.getElementById("result").innerHTML =
+          "<img src='merchant.gif' alt='Merchant' style='display:block; margin:10px auto; max-width:150px; max-height:150px; height:auto;'>" +
+          "<span style='color: red; font-weight: bold;'>No, that's too low!</span><br>" +
+          "Unable to calculate system size.";
         return;
       }
 
@@ -251,4 +250,3 @@
 
 </body>
 </html>
-

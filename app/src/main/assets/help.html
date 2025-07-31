@@ -1,63 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>System Sizer II - Water Softener Estimator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>System Sizer II - Information</title>
   <style>
     body {
-      background-color: #ffffff;
+      background-color: #C0C0C0;
+      font-family: "Verdana", sans-serif;
       color: #000000;
-      font-family: "Verdana", "Arial", sans-serif;
-      margin: 0;
-      padding: 0;
+      margin: 10px;
+      text-align: center;
+    }
+
+    h1, h3.title {
+      font-size: 22px;
+      font-weight: bold;
+      background-color: #000080;
+      color: white;
+      padding: 10px;
+      border: 2px inset #ffffff;
+      margin-bottom: 15px;
+      text-align: center;
     }
 
     .container {
       max-width: 600px;
-      margin: 0 auto;
-      padding: 15px;
-      border: 1px solid #000000;
-    }
-
-    h3, p, ul, pre {
+      margin: auto;
+      background-color: #ffffff;
+      border: 2px outset #000080;
+      padding: 15px 20px;
       text-align: left;
+      font-family: monospace;
+      font-size: 14px;
+      color: #000000;
     }
 
-    h3.title {
+    .version-info {
       text-align: center;
-      font-size: 20px;
-      border-bottom: 2px solid #000000;
-      padding-bottom: 10px;
+      font-style: italic;
+      margin-bottom: 15px;
+      color: #000080;
+      font-family: "Verdana", sans-serif;
+      font-weight: normal;
+      font-size: 14px;
     }
 
-    p.centered, .notice {
-      text-align: center;
+    p.notice {
+      color: #990000;
+      font-weight: bold;
+      background-color: #fff0f0;
+      padding: 8px;
+      border: 2px solid #990000;
+      white-space: pre-wrap;
+      margin: 10px 0 20px 0;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    h3.section-header {
+      font-weight: bold;
+      font-style: italic;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 18px;
+      color: #000080;
     }
 
     ul {
+      margin-top: 0;
+      margin-bottom: 15px;
       padding-left: 20px;
     }
 
-    .notice {
-      color: red;
-      font-weight: bold;
+    ul li {
+      margin-bottom: 6px;
     }
 
     pre {
       font-size: 13px;
       white-space: pre-wrap;
       word-wrap: break-word;
+      background-color: #ffffcc;
+      padding: 10px;
+      border: 2px inset #999900;
+      margin-top: 10px;
+      font-family: monospace;
     }
 
-    @media screen and (max-width: 600px) {
-      .container {
-        border-width: 1px;
-        padding: 10px;
+    @media (max-width: 650px) {
+      body, .container {
+        width: 95%;
       }
 
-      h3.title {
+      h1, h3.title {
         font-size: 18px;
+      }
+
+      .container {
+        padding: 10px 15px;
       }
 
       pre {
@@ -67,23 +108,35 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h3 class="title"><strong>System Sizer II - Water Softener Estimator</strong></h3>
-    <p class="centered"><strong>Version 0.5.250729<br />Author: N. T. Crotser<br />License: GNU GPL v3</strong></p>
-    <hr />
-    <p>&nbsp;</p>
+  <h1>System Sizer II - Information</h1>
 
-    <h3><em><strong>What is System Sizer II?</strong></em></h3>
-    <p>System Sizer II is a free and open-source tool designed to estimate the correct water softener sizing based on real-world parameters:</p>
+  <div class="container">
+    <div class="version-info">
+      Version 0.5.250730<br />
+      Author: N. T. Crotser<br />
+      License: GNU GPL v3
+    </div>
+
+
+    <h3 class="section-header">How to Use This Program</h3>
     <ul>
-      <li>Water Hardness</li>
-      <li>Iron</li>
-      <li>Manganese</li>
-      <li>Water Usage*</li>
+      <li>Enter the water hardness (in grains per gallon, gpg) from your water analysis report.</li>
+      <li>Enter the iron and manganese levels (in ppm) exactly as shown in your report.</li>
+      <li>Input the number of people in your home to estimate daily water demand.</li>
+      <li>Select whether you want to use Ecosoft® ECOMIX C media (Yes/No).</li>
+      <li>Press the <strong>Calculate</strong> button to get your recommended system size.</li>
     </ul>
-    <p class="notice">⚠️ Important Notice: In order to use this program, you <strong>MUST</strong> have a <strong>current water analysis</strong> that includes hardness, iron, and manganese levels.</p>
-    <pre>*System Sizer II uses the US EPA 2025 estimate of 82 gallons/day/person to calculate usage.</pre>
+
+    <h3 class="section-header">Important Tips for Softener Sizing</h3>
+    <ul>
+      <li>Always base sizing on accurate and current water analysis data for best results.</li>
+      <li>Compensate for iron and manganese as they consume resin capacity and affect sizing.</li>
+      <li>Ensure the system is sized to handle your household's peak water demand.</li>
+      <li>Regular maintenance and timely regeneration are essential for system longevity.</li>
+      <li>Undersizing can cause premature resin exhaustion and poor water quality.</li>
+    </ul>
   </div>
 </body>
 </html>
+
 

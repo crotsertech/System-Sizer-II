@@ -5,14 +5,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    WebView SS2;
+    private WebView SS2;
+    private static final String INDEX_URL = "file:///android_asset/index.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +22,21 @@ public class MainActivity extends AppCompatActivity {
         SS2 = findViewById(R.id.SS2);
         SS2.getSettings().setJavaScriptEnabled(true);
         SS2.setWebViewClient(new WebViewClient());
-        SS2.loadUrl("file:///android_asset/index.html");
-    }
+        SS2.loadUrl(INDEX_URL);
 
-    @Override
-    public void onBackPressed() {
-        WebView webView = findViewById(R.id.SS2);
-        if (webView.canGoBack()) {
-            webView.goBack();  // Go to previous page
-        } else {
-            super.onBackPressed();  // Exit app if no history
-        }
+        // Register custom back button behavior
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                String currentUrl = SS2.getUrl();
+
+                if (currentUrl != null && !currentUrl.equals(INDEX_URL)) {
+                    SS2.loadUrl(INDEX_URL); // Go back to home
+                } else {
+                    // Exit app if already at index.html
+                    finish();
+                }
+            }
+        });
     }
 }
